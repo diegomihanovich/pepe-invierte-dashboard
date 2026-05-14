@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Pepe Invierte - Dashboard</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
     :root {
       color-scheme: dark;
       --bg: #07100d;
@@ -1264,6 +1265,914 @@
         font-size: 26px;
       }
     }
+    /* Modern fintech refresh */
+    :root {
+      --bg: #070a09;
+      --bg-2: #0b1110;
+      --panel: rgba(13, 19, 18, 0.92);
+      --panel-2: rgba(14, 22, 20, 0.98);
+      --panel-3: #101716;
+      --surface: rgba(255, 255, 255, 0.045);
+      --surface-2: rgba(255, 255, 255, 0.075);
+      --line: rgba(211, 238, 225, 0.105);
+      --line-strong: rgba(211, 238, 225, 0.22);
+      --ink: #f3fbf7;
+      --ink-soft: #dce9e3;
+      --muted: #9fb0aa;
+      --muted-2: #687a73;
+      --green: #21d48d;
+      --teal: #19c7ba;
+      --lime: #c9f24a;
+      --amber: #f5b84f;
+      --red: #e56a66;
+      --blue: #8aa4ff;
+      --shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
+      --shadow-soft: 0 10px 24px rgba(0, 0, 0, 0.2);
+      --radius: 8px;
+      --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    html {
+      background: var(--bg);
+    }
+
+    body {
+      background:
+        linear-gradient(180deg, rgba(25, 199, 186, 0.055), transparent 280px),
+        linear-gradient(90deg, rgba(255,255,255,0.026) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(255,255,255,0.022) 1px, transparent 1px),
+        linear-gradient(135deg, #070a09 0%, #091210 46%, #0d1211 100%);
+      background-size: auto, 48px 48px, 48px 48px, auto;
+      color: var(--ink);
+      font-family: "Manrope", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 13.5px;
+      line-height: 1.48;
+      letter-spacing: 0;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0) 34%);
+      z-index: -1;
+    }
+
+    .shell {
+      width: min(1560px, calc(100vw - 48px));
+      padding: 14px 0 28px;
+    }
+
+    .topbar {
+      height: 54px;
+      margin-bottom: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 25;
+      border: 1px solid transparent;
+      border-radius: var(--radius);
+      backdrop-filter: blur(16px);
+    }
+
+    .brand {
+      gap: 10px;
+      min-width: 210px;
+    }
+
+    .mark {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius);
+      background: linear-gradient(145deg, #1be59a 0%, #11765a 58%, #0b251e 100%);
+      box-shadow: 0 10px 28px rgba(20, 193, 129, 0.22);
+      font-family: var(--mono);
+      font-size: 16px;
+    }
+
+    .brand-title {
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .brand-subtitle {
+      color: var(--muted);
+      font-size: 11.5px;
+    }
+
+    .nav {
+      gap: 4px;
+      padding: 4px;
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.045);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+
+    .nav-button,
+    .ghost-button,
+    .primary-button,
+    .filter-button,
+    .chip-button,
+    .tab-button,
+    .icon-button,
+    .mini-button {
+      border-color: var(--line);
+      background: rgba(255, 255, 255, 0.045);
+      border-radius: var(--radius);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.045);
+      transition: border-color 150ms ease, background 150ms ease, color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+    }
+
+    .nav-button,
+    .ghost-button,
+    .primary-button,
+    .source-link,
+    .mini-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .nav-button {
+      min-width: 118px;
+      height: 36px;
+      padding: 0 13px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 760;
+    }
+
+    .nav-button.active,
+    .primary-button {
+      background: linear-gradient(135deg, #20d991 0%, #bff044 100%);
+      border-color: rgba(198, 242, 74, 0.45);
+      color: #07100d;
+      box-shadow: 0 10px 28px rgba(31, 216, 143, 0.18);
+    }
+
+    .ghost-button,
+    .primary-button {
+      min-height: 36px;
+      padding: 8px 13px;
+      font-weight: 780;
+    }
+
+    .ghost-button {
+      color: var(--ink-soft);
+    }
+
+    .ghost-button:hover,
+    .filter-button:hover,
+    .chip-button:hover,
+    .tab-button:hover,
+    .icon-button:hover,
+    .mini-button:hover {
+      border-color: var(--line-strong);
+      background: var(--surface-2);
+      text-decoration: none;
+    }
+
+    .primary-button:hover,
+    .company-card:hover {
+      transform: translateY(-1px);
+    }
+
+    .inline-icon,
+    .button-icon,
+    .metric-icon,
+    .section-icon {
+      width: 16px;
+      height: 16px;
+      display: inline-flex;
+      flex: 0 0 auto;
+      color: currentColor;
+    }
+
+    .metric-icon,
+    .section-icon {
+      width: 18px;
+      height: 18px;
+      color: var(--teal);
+    }
+
+    .inline-icon svg,
+    .button-icon svg,
+    .metric-icon svg,
+    .section-icon svg {
+      width: 100%;
+      height: 100%;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .hero {
+      min-height: 0;
+      grid-template-columns: minmax(0, 1.15fr) minmax(360px, 0.85fr);
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .hero-main,
+    .hero-side,
+    .panel,
+    .calculator-panel,
+    .drawer-panel,
+    .home-group {
+      border-color: var(--line);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.025)),
+        var(--panel);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .hero-main {
+      min-height: 224px;
+      padding: 24px;
+      border-left: 1px solid rgba(33, 212, 141, 0.24);
+    }
+
+    .hero-main::after {
+      display: none;
+    }
+
+    .eyebrow {
+      min-height: 26px;
+      margin-bottom: 14px;
+      padding: 4px 9px;
+      border-color: rgba(201, 242, 74, 0.2);
+      background: rgba(201, 242, 74, 0.07);
+      color: var(--lime);
+      border-radius: var(--radius);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .hero-title {
+      max-width: 900px;
+      font-size: clamp(38px, 4.4vw, 58px);
+      line-height: 0.98;
+      margin-bottom: 12px;
+      font-weight: 800;
+    }
+
+    .hero-copy {
+      max-width: 760px;
+      color: #b8cbc4;
+      font-size: 15px;
+      margin-bottom: 18px;
+    }
+
+    .hero-actions {
+      gap: 8px;
+    }
+
+    .hero-side {
+      padding: 14px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 9px;
+    }
+
+    .metric {
+      min-height: 76px;
+      padding: 12px;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 9px 10px;
+      align-items: start;
+      background: rgba(0, 0, 0, 0.22);
+      border-color: rgba(211, 238, 225, 0.095);
+    }
+
+    .metric strong {
+      font-family: var(--mono);
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .metric span:last-child {
+      grid-column: 1 / -1;
+      margin-top: 0;
+      color: #b8cbc4;
+      font-size: 12px;
+    }
+
+    .home-groups {
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr) minmax(0, 1fr);
+      gap: 12px;
+    }
+
+    .home-group {
+      overflow: hidden;
+      background: rgba(10, 16, 15, 0.84);
+    }
+
+    .home-group.top { border-color: rgba(33, 212, 141, 0.34); }
+    .home-group.mid { border-color: rgba(245, 184, 79, 0.28); }
+    .home-group.low { border-color: rgba(138, 164, 255, 0.2); }
+
+    .group-head {
+      min-height: 78px;
+      padding: 14px 16px;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+    }
+
+    .group-head h2 {
+      font-size: 18px;
+      line-height: 1.05;
+      margin-bottom: 5px;
+      font-weight: 800;
+    }
+
+    .group-head p {
+      font-size: 12.5px;
+      color: #aac0b8;
+    }
+
+    .company-grid {
+      gap: 7px;
+      padding: 10px;
+    }
+
+    .company-card {
+      gap: 10px;
+      padding: 9px 10px;
+      min-height: 58px;
+      background: rgba(4, 10, 9, 0.56);
+      border-color: rgba(211, 238, 225, 0.09);
+    }
+
+    .company-card:hover {
+      border-color: rgba(33, 212, 141, 0.34);
+      background: rgba(33, 212, 141, 0.075);
+    }
+
+    .company-card strong,
+    .company-name {
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .company-meta {
+      color: #a9bab4;
+      font-size: 11.5px;
+    }
+
+    .ticker,
+    .score-pill,
+    .score-cell strong,
+    .drawer-kpi strong,
+    .metric strong,
+    .result-score strong,
+    .criterion-value {
+      font-family: var(--mono);
+      letter-spacing: -0.02em;
+    }
+
+    .score-pill {
+      min-width: 46px;
+      height: 30px;
+      border-radius: var(--radius);
+      background: rgba(33, 212, 141, 0.16);
+      border: 1px solid rgba(33, 212, 141, 0.36);
+      color: #7ff0bd;
+      font-size: 13px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+
+    .score-pill.mid {
+      background: rgba(245, 184, 79, 0.16);
+      border-color: rgba(245, 184, 79, 0.36);
+      color: #ffd27a;
+    }
+
+    .score-pill.low {
+      background: rgba(138, 164, 255, 0.12);
+      border-color: rgba(138, 164, 255, 0.24);
+      color: #b8c7ff;
+    }
+
+    .explore-head {
+      margin: 2px 0 12px;
+      align-items: center;
+    }
+
+    .explore-title {
+      font-size: clamp(28px, 2.8vw, 40px);
+      font-weight: 800;
+      margin-bottom: 5px;
+    }
+
+    .explore-copy {
+      color: #aebfb8;
+      font-size: 13.5px;
+    }
+
+    .filters {
+      grid-template-columns: minmax(240px, 1.45fr) repeat(5, minmax(126px, 1fr));
+      gap: 8px;
+      margin-bottom: 12px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.032);
+    }
+
+    .field {
+      gap: 5px;
+    }
+
+    .field label,
+    .summary-fact strong,
+    .section-label {
+      color: #8fa39b;
+      font-size: 10.5px;
+      font-weight: 800;
+    }
+
+    .input,
+    .select,
+    .textarea {
+      min-height: 36px;
+      border-color: rgba(211, 238, 225, 0.115);
+      background: rgba(2, 7, 6, 0.42);
+      border-radius: var(--radius);
+      color: var(--ink);
+      font-size: 13px;
+    }
+
+    .textarea {
+      min-height: 86px;
+    }
+
+    .input:focus,
+    .select:focus,
+    .textarea:focus {
+      border-color: rgba(25, 199, 186, 0.52);
+      box-shadow: 0 0 0 3px rgba(25, 199, 186, 0.1);
+    }
+
+    .table-head {
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.025);
+    }
+
+    table {
+      min-width: 940px;
+    }
+
+    th,
+    td {
+      padding: 10px 12px;
+      border-bottom-color: rgba(211, 238, 225, 0.075);
+    }
+
+    th {
+      color: #8fa39b;
+      font-size: 10.5px;
+      font-weight: 800;
+      background: rgba(255, 255, 255, 0.024);
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    tbody tr:hover,
+    tbody tr.active {
+      background: rgba(25, 199, 186, 0.065);
+    }
+
+    .row-company-button {
+      max-width: 300px;
+    }
+
+    .badge {
+      min-height: 22px;
+      border-radius: 7px;
+      padding: 3px 8px;
+      font-size: 11.5px;
+      font-weight: 800;
+    }
+
+    .badge.good {
+      background: rgba(33, 212, 141, 0.16);
+      border-color: rgba(33, 212, 141, 0.32);
+      color: #7ff0bd;
+    }
+
+    .badge.hold {
+      background: rgba(201, 242, 74, 0.14);
+      border-color: rgba(201, 242, 74, 0.26);
+      color: #dffb80;
+    }
+
+    .badge.mid {
+      background: rgba(245, 184, 79, 0.16);
+      border-color: rgba(245, 184, 79, 0.28);
+      color: #ffd27a;
+    }
+
+    .badge.bad {
+      background: rgba(229, 106, 102, 0.16);
+      border-color: rgba(229, 106, 102, 0.32);
+      color: #ffaaa6;
+    }
+
+    .badge.context,
+    .badge.neutral {
+      background: rgba(255, 255, 255, 0.055);
+      border-color: var(--line);
+      color: #b7c8c1;
+    }
+
+    .score-cell {
+      min-width: 100px;
+    }
+
+    .score-bar,
+    .score-track {
+      height: 6px;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .score-bar span,
+    .score-track span {
+      background: linear-gradient(90deg, var(--teal), var(--lime));
+    }
+
+    .drawer-backdrop {
+      background: rgba(0, 0, 0, 0.48);
+      backdrop-filter: blur(2px);
+    }
+
+    .drawer {
+      top: 10px;
+      bottom: 10px;
+      width: min(720px, calc(100vw - 40px));
+      transition: left 180ms ease, bottom 180ms ease;
+    }
+
+    body.drawer-open .drawer {
+      left: max(10px, calc(100vw - 740px));
+    }
+
+    .drawer-panel {
+      grid-template-rows: auto auto 1fr;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03)),
+        var(--panel-2);
+      box-shadow: 0 20px 80px rgba(0,0,0,0.52);
+    }
+
+    .drawer-header {
+      padding: 16px;
+      padding-right: 58px;
+      padding-left: 16px;
+      gap: 10px;
+    }
+
+    .drawer h2 {
+      font-size: 28px;
+      line-height: 1.02;
+      margin-bottom: 5px;
+      font-weight: 800;
+    }
+
+    .drawer-subtitle {
+      color: #a8bab3;
+      font-size: 13px;
+    }
+
+    .icon-button {
+      width: 36px;
+      height: 36px;
+      color: var(--ink-soft);
+    }
+
+    #drawerClose {
+      top: 14px;
+      left: auto;
+      right: 14px;
+    }
+
+    .drawer-kpis {
+      gap: 7px;
+    }
+
+    .drawer-kpi {
+      min-height: 58px;
+      padding: 9px;
+      background: rgba(0, 0, 0, 0.2);
+      border-color: rgba(211, 238, 225, 0.09);
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 7px 8px;
+      align-items: start;
+    }
+
+    .drawer-kpi strong {
+      font-size: 19px;
+    }
+
+    .drawer-kpi > span:last-child {
+      grid-column: 1 / -1;
+      margin-top: 6px;
+      color: #99aaa4;
+    }
+
+    .drawer-kpi .metric-icon {
+      margin: 1px 0 0;
+      color: var(--teal);
+      display: inline-flex;
+    }
+
+    .tabs {
+      gap: 6px;
+      padding: 8px 10px;
+    }
+
+    .tab-button {
+      min-height: 32px;
+      padding: 7px 10px;
+      font-size: 12.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .tab-button.active {
+      background: rgba(25, 199, 186, 0.12);
+      color: #9cf1e7;
+      border-color: rgba(25, 199, 186, 0.28);
+    }
+
+    .drawer-body {
+      padding: 12px;
+    }
+
+    .summary-grid,
+    .video-list,
+    .evidence-list,
+    .timeline-list,
+    .score-list {
+      gap: 9px;
+    }
+
+    .summary-overview,
+    .video-card,
+    .evidence-card,
+    .score-component,
+    .timeline-card,
+    .criterion,
+    .result-card,
+    .saved-item {
+      background: rgba(0, 0, 0, 0.2);
+      border-color: rgba(211, 238, 225, 0.095);
+      border-radius: var(--radius);
+      padding: 12px;
+    }
+
+    .summary-overview h3,
+    .drawer-section h3,
+    .calculator-panel h2,
+    .calculator-panel h3 {
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .summary-brief {
+      color: var(--ink-soft);
+      font-size: 14px;
+      line-height: 1.42;
+    }
+
+    .summary-fact {
+      min-height: 68px;
+      padding: 9px;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .summary-fact p,
+    .video-card p,
+    .evidence-card p,
+    .timeline-card p,
+    .score-component p {
+      color: #cbd9d4;
+      font-size: 12.8px;
+    }
+
+    .source-link {
+      min-height: 30px;
+      padding: 5px 9px;
+      border-radius: var(--radius);
+      background: rgba(25, 199, 186, 0.08);
+      border-color: rgba(25, 199, 186, 0.22);
+      color: #9cf1e7;
+      font-weight: 800;
+    }
+
+    .video-title {
+      font-weight: 800;
+    }
+
+    .calculator-grid {
+      grid-template-columns: minmax(0, 1.18fr) minmax(360px, 0.82fr);
+      gap: 12px;
+    }
+
+    .calculator-panel {
+      padding: 16px;
+    }
+
+    .calculator-copy {
+      color: #aebfb8;
+      margin-bottom: 14px;
+    }
+
+    .form-grid,
+    .criteria-list,
+    .flags-grid {
+      gap: 8px;
+    }
+
+    .criteria-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-bottom: 18px;
+    }
+
+    .criterion {
+      padding: 11px;
+    }
+
+    .criterion-title {
+      font-weight: 800;
+      font-size: 13.5px;
+    }
+
+    .criterion-help {
+      color: #9fb0aa;
+    }
+
+    .criterion-value {
+      min-width: 36px;
+      height: 28px;
+      border-radius: var(--radius);
+      background: rgba(25, 199, 186, 0.12);
+      border-color: rgba(25, 199, 186, 0.28);
+      color: #9cf1e7;
+    }
+
+    .range {
+      accent-color: var(--teal);
+    }
+
+    .flag-option {
+      border-color: rgba(245, 184, 79, 0.18);
+      background: rgba(245, 184, 79, 0.055);
+      border-radius: var(--radius);
+      padding: 9px;
+      font-size: 12.8px;
+    }
+
+    .result-card {
+      padding: 14px;
+    }
+
+    .result-score strong {
+      font-size: 48px;
+      font-weight: 700;
+    }
+
+    .diagnostic-list {
+      gap: 8px;
+    }
+
+    .diagnostic-block {
+      padding-top: 9px;
+    }
+
+    .saved-item {
+      padding: 10px;
+    }
+
+    .mini-button {
+      min-height: 28px;
+      padding: 5px 9px;
+      font-size: 12px;
+    }
+
+    .empty {
+      color: #9fb0aa;
+    }
+
+    @media (max-width: 1180px) {
+      .calculator-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .criteria-list {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 920px) {
+      .shell {
+        width: min(100vw - 20px, 780px);
+        padding-top: 8px;
+      }
+
+      .topbar {
+        height: auto;
+        padding: 8px 0;
+      }
+
+      .nav {
+        align-self: stretch;
+      }
+
+      .nav-button {
+        min-width: 0;
+      }
+
+      .hero {
+        gap: 10px;
+        grid-template-columns: 1fr;
+      }
+
+      .home-groups {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-main {
+        min-height: 0;
+        padding: 18px;
+      }
+
+      .hero-side {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .hero-title {
+        font-size: clamp(34px, 9vw, 44px);
+      }
+
+      .filters {
+        grid-template-columns: 1fr;
+        padding: 9px;
+      }
+
+      .drawer {
+        right: 8px;
+        left: 8px;
+        width: auto;
+        height: min(88vh, 820px);
+      }
+
+      .drawer-panel {
+        border-radius: var(--radius) var(--radius) 0 0;
+      }
+
+      .drawer-header {
+        padding-right: 54px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .shell {
+        width: calc(100vw - 16px);
+      }
+
+      .brand {
+        min-width: 0;
+      }
+
+      .nav-button {
+        gap: 5px;
+        font-size: 12px;
+      }
+
+      .button-icon {
+        width: 14px;
+        height: 14px;
+      }
+
+      .hero-side,
+      .drawer-kpis,
+      .summary-facts {
+        grid-template-columns: 1fr;
+      }
+
+      .drawer h2 {
+        font-size: 24px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1277,9 +2186,9 @@
         </div>
       </div>
       <nav class="nav" aria-label="Navegacion principal">
-        <button id="navHome" class="nav-button active" type="button">Inicio</button>
-        <button id="navExplore" class="nav-button" type="button">Explorar</button>
-        <button id="navCalculator" class="nav-button" type="button">Calculadora</button>
+        <button id="navHome" class="nav-button active" type="button"><span class="button-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M3 10.5 12 3l9 7.5"/><path d="M5.5 9.5V20h13V9.5"/><path d="M9.5 20v-6h5v6"/></svg></span><span>Inicio</span></button>
+        <button id="navExplore" class="nav-button" type="button"><span class="button-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h16"/><path d="M8 5v14"/></svg></span><span>Explorar</span></button>
+        <button id="navCalculator" class="nav-button" type="button"><span class="button-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8"/><path d="M8 12h.01"/><path d="M12 12h.01"/><path d="M16 12h.01"/><path d="M8 16h.01"/><path d="M12 16h.01"/><path d="M16 16h.01"/></svg></span><span>Calculadora</span></button>
       </nav>
     </header>
 
@@ -1291,8 +2200,8 @@
             <h1 class="hero-title">Mapa rápido de empresas según Pepe</h1>
             <p class="hero-copy">Separa favoritas, ideas en seguimiento y menciones de cautela. Cada score va con mes y año para no leer evidencia vieja como si fuera actual.</p>
             <div class="hero-actions">
-              <button id="heroExplore" class="primary-button" type="button">Ver todas las empresas</button>
-              <button id="heroTop" class="ghost-button" type="button">Ir a top ideas</button>
+              <button id="heroExplore" class="primary-button" type="button"><span class="button-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h16"/></svg></span><span>Ver todas las empresas</span></button>
+              <button id="heroTop" class="ghost-button" type="button"><span class="button-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l2.7 5.5 6.1.9-4.4 4.3 1 6-5.4-2.9-5.4 2.9 1-6-4.4-4.3 6.1-.9L12 3z"/></svg></span><span>Ir a top ideas</span></button>
             </div>
           </div>
           <aside id="homeMetrics" class="hero-side" aria-label="Resumen de corpus"></aside>
@@ -1308,8 +2217,8 @@
             <p class="explore-copy">Filtra la base completa y abre una ficha lateral sin perder la tabla.</p>
           </div>
           <div class="explore-actions">
-            <button id="closeDrawerOutside" class="ghost-button" type="button">Cerrar detalle</button>
-            <button id="clearFilters" class="ghost-button" type="button">Limpiar filtros</button>
+            <button id="closeDrawerOutside" class="ghost-button" type="button"><span class="button-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span><span>Cerrar detalle</span></button>
+            <button id="clearFilters" class="ghost-button" type="button"><span class="button-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16"/><path d="M7 12h10"/><path d="M10 18h4"/></svg></span><span>Limpiar filtros</span></button>
           </div>
         </header>
 
@@ -1370,7 +2279,7 @@
             <h1 class="explore-title">Calculadora scorecard</h1>
             <p class="explore-copy">Evalua manualmente una empresa nueva con criterios inspirados en como se ordenan las tesis de Pepe. No usa datos externos ni reemplaza investigacion propia.</p>
           </div>
-          <button id="newEvaluation" class="primary-button" type="button">Nueva evaluación</button>
+          <button id="newEvaluation" class="primary-button" type="button"><span class="button-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14"/><path d="M5 12h14"/></svg></span><span>Nueva evaluación</span></button>
         </header>
 
         <section class="calculator-grid">
@@ -1403,8 +2312,8 @@
             <div id="flagsList" class="flags-grid"></div>
 
             <div class="calculator-actions">
-              <button id="saveEvaluation" class="primary-button" type="button">Guardar</button>
-              <button id="clearEvaluation" class="ghost-button" type="button">Limpiar formulario</button>
+              <button id="saveEvaluation" class="primary-button" type="button"><span class="button-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8"/><path d="M7 3v5h8"/></svg></span><span>Guardar</span></button>
+              <button id="clearEvaluation" class="ghost-button" type="button"><span class="button-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="m19 6-1 14H6L5 6"/><path d="M10 11v5"/><path d="M14 11v5"/></svg></span><span>Limpiar formulario</span></button>
             </div>
           </div>
 
@@ -1428,7 +2337,7 @@
             <h2 id="drawerTitle"></h2>
             <p id="drawerSubtitle" class="drawer-subtitle"></p>
           </div>
-          <button id="drawerClose" class="icon-button" type="button" aria-label="Cerrar detalle">x</button>
+          <button id="drawerClose" class="icon-button" type="button" aria-label="Cerrar detalle"><span class="button-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span></button>
         </div>
         <div id="drawerBadges" class="timeline-meta"></div>
         <div id="drawerKpis" class="drawer-kpis"></div>
@@ -1458,6 +2367,25 @@
       calculator: null,
       savedEvaluations: []
     };
+
+    const iconPaths = {
+      activity: '<path d="M4 14h4l2-8 4 12 2-6h4"/>',
+      building: '<path d="M4 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"/><path d="M16 8h2a2 2 0 0 1 2 2v11"/><path d="M8 7h4"/><path d="M8 11h4"/><path d="M8 15h4"/>',
+      calendar: '<path d="M7 3v4"/><path d="M17 3v4"/><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 10h16"/>',
+      clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+      external: '<path d="M14 4h6v6"/><path d="M10 14 20 4"/><path d="M20 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h4"/>',
+      file: '<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/>',
+      search: '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
+      shield: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+      target: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
+      trophy: '<path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 4h10v6a5 5 0 0 1-10 0z"/><path d="M5 5H3v3a4 4 0 0 0 4 4"/><path d="M19 5h2v3a4 4 0 0 1-4 4"/>',
+      video: '<path d="M15 10l5-3v10l-5-3z"/><rect x="3" y="6" width="12" height="12" rx="2"/>'
+    };
+
+    function svgIcon(name, className = 'inline-icon') {
+      const path = iconPaths[name] || iconPaths.file;
+      return `<span class="${className}" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none">${path}</svg></span>`;
+    }
 
     const statusOrder = [
       ['favorita_comprando', 'Favorita / comprando'],
@@ -1516,6 +2444,13 @@
       ['timeline', 'Timeline'],
       ['evidence', 'Evidencia']
     ];
+
+    const tabIcons = {
+      summary: 'file',
+      score: 'target',
+      timeline: 'clock',
+      evidence: 'search'
+    };
 
     const CALCULATOR_STORAGE_KEY = 'pepeCalculatorEvaluationsV1';
 
@@ -1942,13 +2877,14 @@
       dossiers.forEach((dossier) => (dossier.top_videos || []).forEach((video) => totalVideos.add(video.id || video.video_id || video.url)));
       const topScore = dossiers[0]?.pepe_score?.score || 0;
       $('homeMetrics').innerHTML = [
-        ['35', 'Empresas y activos'],
-        [String(totalVideos.size || 67), 'Videos con evidencia'],
-        [String(Math.round(topScore)), 'Score líder'],
-        ['0', 'Casos en revisión']
-      ].map(([value, label]) => `<div class="metric"><strong>${escapeHtml(value)}</strong><span>${escapeHtml(label)}</span></div>`).join('');
+        [String(dossiers.length), 'Empresas y activos', 'building'],
+        [String(totalVideos.size || 67), 'Videos con evidencia', 'video'],
+        [String(Math.round(topScore)), 'Score líder', 'trophy'],
+        ['0', 'Casos en revisión', 'shield']
+      ].map(([value, label, iconName]) => `<div class="metric">${svgIcon(iconName, 'metric-icon')}<strong>${escapeHtml(value)}</strong><span>${escapeHtml(label)}</span></div>`).join('');
 
       const groupLimits = { top: 10, mid: 6, low: 5 };
+      const groupIcons = { top: 'trophy', mid: 'activity', low: 'shield' };
       $('homeGroups').innerHTML = Object.entries(groups).map(([groupId, group]) => {
         const rows = dossiers
           .filter((dossier) => groupFor(dossier) === groupId)
@@ -1956,8 +2892,11 @@
           .slice(0, groupLimits[groupId]);
         return `<article class="home-group ${groupId}">
           <div class="group-head">
-            <h2>${escapeHtml(group.label)}</h2>
-            <p>${escapeHtml(group.note)}</p>
+            ${svgIcon(groupIcons[groupId] || 'file', 'section-icon')}
+            <div>
+              <h2>${escapeHtml(group.label)}</h2>
+              <p>${escapeHtml(group.note)}</p>
+            </div>
           </div>
           <div class="company-grid">
             ${rows.map((dossier) => renderCompanyButton(dossier)).join('')}
@@ -2058,13 +2997,13 @@
         ${status.reviewed ? '<span class="badge good">auditada</span>' : ''}
       `;
       $('drawerKpis').innerHTML = [
-        [score.toFixed(0), 'Score Pepe'],
-        [formatMonthYear(dossier.pepe_score?.date), 'Fecha score'],
-        [String(dossier.stats?.video_count || 0), 'Videos'],
-        [String(dossier.stats?.mention_count || 0), 'Menciones']
-      ].map(([value, label]) => `<div class="drawer-kpi"><strong>${escapeHtml(value)}</strong><span>${escapeHtml(label)}</span></div>`).join('');
+        [score.toFixed(0), 'Score Pepe', 'target'],
+        [formatMonthYear(dossier.pepe_score?.date), 'Fecha score', 'calendar'],
+        [String(dossier.stats?.video_count || 0), 'Videos', 'video'],
+        [String(dossier.stats?.mention_count || 0), 'Menciones', 'activity']
+      ].map(([value, label, iconName]) => `<div class="drawer-kpi">${svgIcon(iconName, 'metric-icon')}<strong>${escapeHtml(value)}</strong><span>${escapeHtml(label)}</span></div>`).join('');
       $('drawerTabs').innerHTML = tabs.map(([key, label]) => (
-        `<button class="tab-button ${state.activeTab === key ? 'active' : ''}" type="button" data-tab="${key}">${escapeHtml(label)}</button>`
+        `<button class="tab-button ${state.activeTab === key ? 'active' : ''}" type="button" data-tab="${key}">${svgIcon(tabIcons[key] || 'file', 'button-icon')}<span>${escapeHtml(label)}</span></button>`
       )).join('');
       document.querySelectorAll('[data-tab]').forEach((button) => {
         button.addEventListener('click', () => {
@@ -2103,7 +3042,7 @@
       }
       const source = card.primary_source || dossier.recommendation_status?.evidence || {};
       const sourceUrl = source.url || source.url_at_time || dossier.recommendation_status?.review_source_url;
-      const sourceBlock = sourceUrl ? `<div class="summary-source"><div class="source-row"><a class="source-link" href="${escapeHtml(sourceUrl)}" target="_blank" rel="noreferrer">Fuente principal</a><span>${escapeHtml(source.video_title || '')}</span></div></div>` : '';
+      const sourceBlock = sourceUrl ? `<div class="summary-source"><div class="source-row"><a class="source-link" href="${escapeHtml(sourceUrl)}" target="_blank" rel="noreferrer">${svgIcon('external')}<span>Fuente principal</span></a><span>${escapeHtml(source.video_title || '')}</span></div></div>` : '';
       return `<div class="summary-grid">
         <article class="summary-overview">
           <div class="summary-overview-top">
@@ -2133,7 +3072,7 @@
           <a class="video-title" href="${escapeHtml(primaryUrl)}" target="_blank" rel="noreferrer">${escapeHtml(video.title)}</a>
           <p>${escapeHtml(video.upload_date || 'sin fecha')} - ${Number(video.mention_count || 0)} menciones${escapeHtml(chapter)}</p>
           <div class="source-row">
-            <a class="source-link" href="${escapeHtml(primaryUrl)}" target="_blank" rel="noreferrer">Momento relevante</a>
+            <a class="source-link" href="${escapeHtml(primaryUrl)}" target="_blank" rel="noreferrer">${svgIcon('external')}<span>Momento relevante</span></a>
             <a href="${escapeHtml(video.url)}" target="_blank" rel="noreferrer">Video completo</a>
           </div>
         </article>`;
@@ -2146,7 +3085,7 @@
       return `<div class="score-list">${components.map((component) => {
         const width = Math.max(0, Math.min(100, Number(component.score || 0) * 10)).toFixed(0);
         const source = component.source || {};
-        const sourceLink = source.url ? `<a class="source-link" href="${escapeHtml(source.url)}" target="_blank" rel="noreferrer">Abrir timestamp</a>` : '';
+        const sourceLink = source.url ? `<a class="source-link" href="${escapeHtml(source.url)}" target="_blank" rel="noreferrer">${svgIcon('external')}<span>Abrir timestamp</span></a>` : '';
         return `<article class="score-component">
           <div class="score-component-top"><span>${escapeHtml(component.label)}</span><span>${Number(component.score || 0).toFixed(1)} / 10</span></div>
           <div class="score-track"><span style="width:${width}%"></span></div>
@@ -2168,7 +3107,7 @@
             <span>${escapeHtml(row.upload_date || 'sin fecha')}</span>
           </div>
           <p>${escapeHtml(evidence.text || '')}</p>
-          <div class="source-row"><a class="source-link" href="${escapeHtml(row.url_at_time)}" target="_blank" rel="noreferrer">Abrir timestamp</a><span>${escapeHtml(row.video_title || '')}</span></div>
+          <div class="source-row"><a class="source-link" href="${escapeHtml(row.url_at_time)}" target="_blank" rel="noreferrer">${svgIcon('external')}<span>Abrir timestamp</span></a><span>${escapeHtml(row.video_title || '')}</span></div>
         </article>`;
       }).join('')}</div>`;
     }
@@ -2192,7 +3131,7 @@
         return `<article class="evidence-card">
           <div class="evidence-meta"><span class="badge neutral">${escapeHtml(title)}</span><span>${escapeHtml(row.date || row.upload_date || 'sin fecha')}</span><span>${escapeHtml(row.video_title || '')}</span></div>
           <p>${escapeHtml(row.text || '')}</p>
-          <div class="source-row">${url ? `<a class="source-link" href="${escapeHtml(url)}" target="_blank" rel="noreferrer">Abrir timestamp</a>` : ''}</div>
+          <div class="source-row">${url ? `<a class="source-link" href="${escapeHtml(url)}" target="_blank" rel="noreferrer">${svgIcon('external')}<span>Abrir timestamp</span></a>` : ''}</div>
         </article>`;
       }).join('')}</div>`;
     }
@@ -2277,8 +3216,8 @@
           </div>
           <p>${escapeHtml(category)} - ${escapeHtml(formatDateTime(row.updatedAt || row.createdAt))}</p>
           <div class="saved-actions">
-            <button class="mini-button" type="button" data-load-evaluation="${escapeHtml(row.id)}">Cargar</button>
-            <button class="mini-button danger" type="button" data-delete-evaluation="${escapeHtml(row.id)}">Eliminar</button>
+            <button class="mini-button" type="button" data-load-evaluation="${escapeHtml(row.id)}">${svgIcon('file')}<span>Cargar</span></button>
+            <button class="mini-button danger" type="button" data-delete-evaluation="${escapeHtml(row.id)}">${svgIcon('shield')}<span>Eliminar</span></button>
           </div>
         </article>`;
       }).join('');
