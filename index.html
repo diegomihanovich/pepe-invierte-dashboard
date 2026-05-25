@@ -2958,7 +2958,7 @@
         ['0', 'Casos en revisión', 'shield']
       ].map(([value, label, iconName]) => `<div class="metric">${svgIcon(iconName, 'metric-icon')}<strong>${escapeHtml(value)}</strong><span>${escapeHtml(label)}</span></div>`).join('');
 
-      const groupLimits = { top: 10, mid: 6, low: 5 };
+      const groupLimits = { top: 15, mid: 6, low: 5 };
       const groupIcons = { top: 'trophy', mid: 'activity', low: 'shield' };
       $('homeGroups').innerHTML = Object.entries(groups).map(([groupId, group]) => {
         const rows = dossiers
