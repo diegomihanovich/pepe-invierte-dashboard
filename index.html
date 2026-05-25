@@ -836,6 +836,78 @@
       margin-top: 0;
     }
 
+    .proof-guide {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+    }
+
+    .proof-guide-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 9px;
+    }
+
+    .proof-guide-head strong {
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .proof-guide-head span {
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 900;
+    }
+
+    .proof-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .proof-card {
+      border: 1px solid rgba(170, 255, 221, 0.11);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.035);
+      padding: 10px;
+      min-height: 122px;
+    }
+
+    .proof-card.primary {
+      border-color: rgba(214, 255, 79, 0.28);
+      background: rgba(214, 255, 79, 0.07);
+    }
+
+    .proof-card.caution {
+      border-color: rgba(255, 200, 87, 0.22);
+      background: rgba(255, 200, 87, 0.055);
+    }
+
+    .proof-card strong {
+      display: block;
+      color: var(--ink);
+      font-size: 13px;
+      margin-bottom: 5px;
+    }
+
+    .proof-card p {
+      margin: 0;
+      color: #dcebe4;
+      font-size: 12px;
+      line-height: 1.35;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .proof-card .source-row {
+      margin-top: 8px;
+    }
+
     .summary-fact strong,
     .section-label {
       display: block;
@@ -2165,7 +2237,8 @@
 
       .hero-side,
       .drawer-kpis,
-      .summary-facts {
+      .summary-facts,
+      .proof-grid {
         grid-template-columns: 1fr;
       }
 
@@ -2444,6 +2517,8 @@
       ['timeline', 'Timeline'],
       ['evidence', 'Evidencia']
     ];
+
+    const guidedEvidenceCompanies = new Set(['V', 'AXP', 'ASML']);
 
     const tabIcons = {
       summary: 'file',
@@ -3042,7 +3117,9 @@
       }
       const source = card.primary_source || dossier.recommendation_status?.evidence || {};
       const sourceUrl = source.url || source.url_at_time || dossier.recommendation_status?.review_source_url;
-      const sourceBlock = sourceUrl ? `<div class="summary-source"><div class="source-row"><a class="source-link" href="${escapeHtml(sourceUrl)}" target="_blank" rel="noreferrer">${svgIcon('external')}<span>Fuente principal</span></a><span>${escapeHtml(source.video_title || '')}</span></div></div>` : '';
+      const guideBlock = renderGuidedEvidence(dossier);
+      const sourceBlock = !guideBlock && sourceUrl ? `<div class="summary-source"><div class="source-row"><a class="source-link" href="${escapeHtml(sourceUrl)}" target="_blank" rel="noreferrer">${svgIcon('external')}<span>Fuente principal</span></a><span>${escapeHtml(source.video_title || '')}</span></div></div>` : '';
+      const videosTitle = guideBlock ? 'Menciones destacadas' : 'Videos principales';
       return `<div class="summary-grid">
         <article class="summary-overview">
           <div class="summary-overview-top">
@@ -3053,13 +3130,91 @@
           <div class="summary-facts">
             ${facts.map(([label, text]) => `<div class="summary-fact"><strong>${escapeHtml(label)}</strong><p>${escapeHtml(text)}</p></div>`).join('')}
           </div>
+          ${guideBlock}
           ${sourceBlock}
         </article>
         <section class="drawer-section">
-          <h3>Videos principales</h3>
+          <h3>${videosTitle}</h3>
           <div class="video-list">${renderVideos(dossier, 3)}</div>
         </section>
       </div>`;
+    }
+
+    function evidenceUrl(row) {
+      return row?.url || row?.url_at_time || '';
+    }
+
+    function firstEvidence(rows) {
+      return (rows || []).find((row) => evidenceUrl(row)) || null;
+    }
+
+    function fullVideoUrl(row, dossier) {
+      if (row?.video_id) return `https://www.youtube.com/watch?v=${encodeURIComponent(row.video_id)}`;
+      const url = evidenceUrl(row);
+      const match = url.match(/[?&]v=([^&]+)/);
+      if (match) return `https://www.youtube.com/watch?v=${encodeURIComponent(match[1])}`;
+      return (dossier.top_videos || [])[0]?.url || url;
+    }
+
+    function renderGuidedEvidence(dossier) {
+      const companyId = dossier.company?.id;
+      if (!guidedEvidenceCompanies.has(companyId)) return '';
+      const card = dossier.company_card || {};
+      const summary = card.curated_summary || {};
+      const primary = card.primary_source || firstEvidence(card.action_evidence);
+      const thesis = firstEvidence(card.thesis_evidence) || firstEvidence(card.fundamental_evidence);
+      const caution = firstEvidence(card.valuation_evidence) || firstEvidence(card.risk_evidence);
+      const full = primary || thesis || caution || (dossier.top_videos || [])[0];
+      const items = [
+        {
+          label: 'Prueba principal',
+          text: summary.accion || 'Fuente usada para justificar el estado principal.',
+          row: primary,
+          action: 'Abrir prueba',
+          tone: 'primary'
+        },
+        {
+          label: 'Por que le gusta',
+          text: summary.tesis || 'Fragmento elegido para entender la tesis positiva.',
+          row: thesis,
+          action: 'Abrir tesis',
+          tone: 'thesis'
+        },
+        {
+          label: 'Valuacion / cuidado',
+          text: summary.valuacion || summary.riesgos || 'Fragmento elegido para revisar precio, riesgo o contexto.',
+          row: caution,
+          action: 'Ver cuidado',
+          tone: 'caution'
+        },
+        {
+          label: 'Video completo',
+          text: 'Abrir el video sin depender del timestamp para revisar el contexto entero.',
+          row: full,
+          action: 'Video completo',
+          tone: 'full',
+          fullVideo: true
+        }
+      ].filter((item) => item.row && (evidenceUrl(item.row) || item.fullVideo));
+      if (!items.length) return '';
+      return `<div class="proof-guide">
+        <div class="proof-guide-head"><strong>Pruebas clave</strong><span>curado</span></div>
+        <div class="proof-grid">${items.map((item) => renderProofCard(item, dossier)).join('')}</div>
+      </div>`;
+    }
+
+    function renderProofCard(item, dossier) {
+      const row = item.row || {};
+      const url = item.fullVideo ? fullVideoUrl(row, dossier) : evidenceUrl(row);
+      const meta = [row.date || row.upload_date, row.video_title].filter(Boolean).join(' - ');
+      return `<article class="proof-card ${escapeHtml(item.tone || '')}">
+        <strong>${escapeHtml(item.label)}</strong>
+        <p>${escapeHtml(item.text || row.text || '')}</p>
+        <div class="source-row">
+          ${url ? `<a class="source-link" href="${escapeHtml(url)}" target="_blank" rel="noreferrer">${svgIcon('external')}<span>${escapeHtml(item.action)}</span></a>` : ''}
+          ${meta ? `<span>${escapeHtml(meta)}</span>` : ''}
+        </div>
+      </article>`;
     }
 
     function renderVideos(dossier, limit = 6) {
@@ -3072,7 +3227,7 @@
           <a class="video-title" href="${escapeHtml(primaryUrl)}" target="_blank" rel="noreferrer">${escapeHtml(video.title)}</a>
           <p>${escapeHtml(video.upload_date || 'sin fecha')} - ${Number(video.mention_count || 0)} menciones${escapeHtml(chapter)}</p>
           <div class="source-row">
-            <a class="source-link" href="${escapeHtml(primaryUrl)}" target="_blank" rel="noreferrer">${svgIcon('external')}<span>Momento relevante</span></a>
+            <a class="source-link" href="${escapeHtml(primaryUrl)}" target="_blank" rel="noreferrer">${svgIcon('external')}<span>Mencion detectada</span></a>
             <a href="${escapeHtml(video.url)}" target="_blank" rel="noreferrer">Video completo</a>
           </div>
         </article>`;
